@@ -1,4 +1,4 @@
-package arr
+package cum_list
 
 import (
 	"strconv"
@@ -16,7 +16,7 @@ const (
 	_ELEMENT_NOT_FOUND = -1 //默认元素没找到
 )
 
-func NewArrayList(capacity int) IArrayList{
+func NewArrayList(capacity int) IList{
 	if capacity < 10{
 		capacity = _DEFAULT_CAPACITY
 	}
@@ -38,12 +38,7 @@ func (a *arrayList) IsEmpty() bool {
 
 //是否包含某个元素
 func (a *arrayList) Contains(element int) bool {
-	for i := 0; i < a.size; i++ {
-		if(element == a.arrayData[i]){
-			return true
-		}
-	}
-	return false
+	return a.IndexOf(element) > -1
 }
 
 //判断数组是否已满
@@ -113,6 +108,22 @@ func (a *arrayList) AddIndex(index int, element int) {
 
 	a.arrayData[index] = element
 	a.size++
+}
+
+//返回第一个 位置的对应元素
+func (a *arrayList) GetFirst() int{
+	if a.IsEmpty(){
+		panic("arr is empty")
+	}
+	return a.arrayData[0]
+}
+
+//返回最后一个 位置的对应元素
+func (a *arrayList)  GetLast() int{
+	if a.IsEmpty(){
+		panic("arr is empty")
+	}
+	return a.arrayData[a.size-1]
 }
 
 //返回index 位置的对应元素

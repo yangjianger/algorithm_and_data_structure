@@ -1,17 +1,33 @@
 package main
 
 import (
-	"algor3/arr"
+	"algor3/cum_list"
 	"fmt"
 )
 
 func main(){
+	linkedListObj := cum_list.NewLinkedList()
+
+	for i := 0; i < 10; i++ {
+		linkedListObj.Add(i + 1)
+	}
+	linkedListObj.AddLast(12345)
+	fmt.Println(linkedListObj.Get(9))
+	fmt.Println(linkedListObj.Set(9, 123))
+	fmt.Println(linkedListObj.IndexOf(3))
+	fmt.Println(linkedListObj.Contains(1231))
+	//fmt.Println(linkedListObj.RemoveFirst())
+	fmt.Println(linkedListObj.RemoveLast())
+	//fmt.Println(linkedListObj.Set(8, 123))
+
+	fmt.Println(linkedListObj)
+
 
 }
 
 func mainArr(){
 
-	arrayList := arr.NewArrayList(10)
+	arrayList := cum_list.NewArrayList(10)
 	for i := 0; i < 10; i++ {
 		arrayList.Add(i)
 	}
