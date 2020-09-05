@@ -154,6 +154,12 @@ func (a *arrayList) Remove(index int) int {
 	for i := index; i < a.size-1; i++ {
 		a.arrayData[i] = a.arrayData[i+1]
 	}
+
+	//缩容
+	if a.size < int(cap(a.arrayData) / 4) &&  int(cap(a.arrayData) / 4) > 0 {
+		a.resize(int(cap(a.arrayData) / 2))
+	}
+
 	a.size --
 	return oldEle
 }
@@ -182,6 +188,7 @@ func (a *arrayList) IndexOf(element int) int {
 //清除所有元素
 func (a *arrayList) Clear() {
 	a.size = 0
+	a.arrayData = make([]int, _DEFAULT_CAPACITY);
 }
 
 //输出数组

@@ -8,6 +8,7 @@ import (
 type linkedList struct {
 	//虚拟头结点
 	dummyHead *node
+	last *node
 	size int
 }
 
@@ -119,11 +120,36 @@ func (l *linkedList) AddIndex(index int, element int) {
 
 	cur := l.dummyHead
 
-	for i := 0; i < index; i++ {
-		cur = cur.nextNode
+	//判断如果在中间之后，从后往前进行查找
+	if index > int(l.size / 2) && index > _DEFAULT_CAPACITY{
+		cur = l.last
+		for i := l.size; i > index; i-- {
+			cur = cur.prevNode
+		}
+	}else{
+		for i := 0; i < index; i++ {
+			cur = cur.nextNode
+		}
 	}
-	
-	cur.nextNode = newNode(element, cur.nextNode, cur)
+
+
+
+	newNodeEle := newNode(element, nil, nil)
+
+	newNodeEle.nextNode = cur.nextNode
+
+	if newNodeEle.nextNode != nil{
+		//添加中间元素
+		newNodeEle.prevNode = cur
+		newNodeEle.nextNode.prevNode = newNodeEle
+	}else{
+		//添加最后元素
+		newNodeEle.prevNode = cur
+		l.last = newNodeEle
+	}
+
+	cur.nextNode = newNodeEle
+
 	l.size ++
 }
 
@@ -147,8 +173,19 @@ func (l *linkedList) Remove(index int) int {
 		prev = prev.nextNode
 	}
 
-	oldVal := prev.nextNode.val
-	prev.nextNode =  prev.nextNode.nextNode
+	removeNode := prev.nextNode
+	oldVal := removeNode.val
+
+	prev.nextNode =  removeNode.nextNode
+
+	if removeNode.nextNode != nil{
+		//不是移除最后一个
+		removeNode.nextNode.prevNode = prev
+	}else{
+		//移除最后一个
+		l.last = prev
+	}
+
 	l.size --
 	return oldVal
 
@@ -183,6 +220,40 @@ func (l *linkedList) IndexOf(element int) int {
 //清除所有元素
 func (l *linkedList) Clear() {
 	l.size = 0
+}
+
+//反转链表，递归实现
+func (l *linkedList) ReverseList(head *node) *node{
+
+	if head == nil || head.nextNode == nil{
+		return head
+	}
+
+	newNode := l.ReverseList(head.nextNode)
+	head.nextNode.nextNode = head
+	head.nextNode = nil
+
+	return newNode
+}
+
+//判断是否有环 ---> 快慢指针 ---> 如果是环形，快的最后都会赶上慢的
+func (l *linkedList) hasCycle(head *node) bool{
+	if head == nil || head.nextNode == nil{
+		return false
+	}
+
+	slow := l.dummyHead
+	fast := l.dummyHead.nextNode
+	for fast != nil && fast.nextNode != nil {
+		if fast == slow{
+			return true
+		}
+		slow = slow.nextNode
+		fast = fast.nextNode.nextNode
+	}
+
+	return false
+
 }
 
 //输出链表

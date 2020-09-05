@@ -7,22 +7,23 @@ import (
 
 func main(){
 	linkedListObj := cum_list.NewLinkedList()
+	listTest(linkedListObj)
+}
 
+func listTest(listObj cum_list.IList){
 	for i := 0; i < 10; i++ {
-		linkedListObj.Add(i + 1)
+		listObj.Add(i + 1)
 	}
-	linkedListObj.AddLast(12345)
-	fmt.Println(linkedListObj.Get(9))
-	fmt.Println(linkedListObj.Set(9, 123))
-	fmt.Println(linkedListObj.IndexOf(3))
-	fmt.Println(linkedListObj.Contains(1231))
-	//fmt.Println(linkedListObj.RemoveFirst())
-	fmt.Println(linkedListObj.RemoveLast())
-	//fmt.Println(linkedListObj.Set(8, 123))
+	listObj.AddLast(12345)
+	fmt.Println(listObj.Get(9))
+	fmt.Println(listObj.Set(9, 123))
+	fmt.Println(listObj.IndexOf(3))
+	fmt.Println(listObj.Contains(1231))
+	//fmt.Println(listObj.RemoveFirst())
+	fmt.Println(listObj.RemoveLast())
+	//fmt.Println(listObj.Set(8, 123))
 
-	fmt.Println(linkedListObj)
-
-
+	fmt.Println(listObj)
 }
 
 func mainArr(){
