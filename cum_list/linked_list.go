@@ -132,8 +132,6 @@ func (l *linkedList) AddIndex(index int, element int) {
 		}
 	}
 
-
-
 	newNodeEle := newNode(element, nil, nil)
 
 	newNodeEle.nextNode = cur.nextNode
@@ -169,8 +167,15 @@ func (l *linkedList) Remove(index int) int {
 
 	prev := l.dummyHead
 
-	for i := 0; i < index; i++ {
-		prev = prev.nextNode
+	if index > int(l.size / 2) && index > _DEFAULT_CAPACITY{
+		prev = l.last
+		for i := l.size; i > index; i-- {
+			prev = prev.prevNode
+		}
+	}else{
+		for i := 0; i < index; i++ {
+			prev = prev.nextNode
+		}
 	}
 
 	removeNode := prev.nextNode
